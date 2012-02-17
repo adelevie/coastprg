@@ -1,0 +1,38 @@
+!Workspace
+!Version 400
+!Charset WindowsLatin1
+Open Table "spec1" As spec1 Interactive
+Open Table "adnot1" As adnot1 Interactive
+Open Table "antenv1" As antenv1 Interactive
+Open Table "conpt1" As conpt1 Interactive
+Open Table "elig1" As elig1 Interactive
+Open Table "emis1" As emis1 Interactive
+Open Table "freq1" As freq1 Interactive
+Open Table "paint1" As paint1 Interactive
+Open Table "power1" As power1 Interactive
+Open Table "rcvr1" As rcvr1 Interactive
+Open Table "rzone1" As rzone1 Interactive
+Open Table "sitef1" As sitef1 Interactive
+Open Table "sitem1" As sitem1 Interactive
+Open Table "admin1" As admin1 Interactive
+Open Table "C:\Apps\MapInfo\DATA\USA\States" As States Interactive
+Map From rcvr1,sitem1,sitef1,States 
+  Position (0.0520833,0.0520833) Units "in"
+  Width 5.92708 Units "in" Height 4.04167 Units "in" 
+Set Window FrontWindow() ScrollBars Off Autoscroll On
+Set Map
+  CoordSys Earth Projection 1, 0
+  Center (-76.23508099,38.88412811)
+  Zoom 211.7964714 Units "mi"
+  Preserve Zoom Display Zoom
+  XY Units "degree" Distance Units "mi" Area Units "sq mi"
+Set Map
+  Layer 1
+    Display Graphic
+  Layer 2
+    Display Graphic
+  Layer 3
+    Display Graphic
+  Layer 4
+    Display Global
+    Global  Brush (2,16777128,16777215)    

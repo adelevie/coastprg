@@ -1,0 +1,136 @@
+'This program Imports the Coast - 47 CFR Part 80 and 87 Database from the FCC
+'web site.  The database can be found at http://www.fcc.gov/wtb/databases.html or
+'directly at ftp://ftp.fcc.gov/pub/XFS_AlphaTest/zipped/coast.zip
+
+'This Program was written by Michael R. Davis
+'If you have any comments please, send them to mdavis@fcc.gov
+
+Dim I% as SmallInt
+Dim DataFileName as String
+Dim RegFileName as String
+Dim TableFileName as String
+Dim CountArray(14) as Integer
+Dim ShortNameArray(14) as String
+Dim TotalCount as Integer
+Dim StartTime as Integer
+StartTime = Timer()
+
+Set ProgressBars off
+Print Chr$(12)
+
+For I% = 1 to 14
+Do Case I%
+  Case 1
+    ShortNameArray(I%) = "admin"
+  Case 2
+    ShortNameArray(I%) = "adnot"
+  Case 3
+    ShortNameArray(I%) = "antenv"
+  Case 4
+    ShortNameArray(I%) = "conpt"
+  Case 5
+    ShortNameArray(I%) = "elig"
+  Case 6
+    ShortNameArray(I%) = "emis"
+  Case 7
+    ShortNameArray(I%) = "freq"
+  Case 8
+    ShortNameArray(I%) = "paint"
+  Case 9
+    ShortNameArray(I%) = "power"
+  Case 10
+    ShortNameArray(I%) = "rcvr"
+  Case 11
+    ShortNameArray(I%) = "rzone"
+  Case 12
+    ShortNameArray(I%) = "sitef"
+  Case 13
+    ShortNameArray(I%) = "sitem"
+  Case 14
+    ShortNameArray(I%) = "spec"
+End Case
+Set Window Message Position (5,1) Width 3 Height 4.5
+Print Format$((I%-1)/14,"#00.0%") + " Completed."
+Print " Working with Table " + ShortNameArray(I%) + "..."
+
+DataFilename = ApplicationDirectory$() + ShortNameArray(I%) + ".dat"
+RegFileName  = ApplicationDirectory$() + ShortNameArray(I%) + ".tab"
+TableFileName  = ApplicationDirectory$() + ShortNameArray(I%) + "1.tab"
+
+Register Table DataFilename TYPE ASCII Delimiter 124 Charset "WindowsLatin1" Into RegFileName
+Open Table RegFileName As RegTab Interactive
+Commit Table RegTab As TableFileName TYPE NATIVE Charset "WindowsLatin1"
+Close Table RegTab Interactive
+Open Table TableFileName as MITable Interactive
+
+'The following table definitions were accurate as of 27 August, 1996
+'Please verify them at ftp://ftp.fcc.gov/pub/XFS_AlphaTest/zipped/coast.txt
+
+Do Case I%
+  Case 1
+    Alter Table MITable ( rename _COL1 callsign,_COL2 id_seq_num,_COL3 callsign_assoc,_COL4 city,_COL5 city_geo_marine,_COL6 date_expire,_COL7 date_issue,_COL8 date_last_change,_COL9 date_purge,_COL10 flag_nepa,_COL11 flag_public_corr,_COL12 flag_purge,_COL13 id_coast_ground,_COL14 id_examiner,_COL15 id_fee_num,_COL16 id_file_num,_COL17 id_sel_call_num,_COL18 id_soundex_dba,_COL19 id_soundex_licensee,_COL20 nad_locator,_COL21 name_licensee,_COL22 name_licensee_dba,_COL23 state,_COL24 sw_civil_air,_COL25 text_attn_line,_COL26 text_street,_COL27 type_action_mailcode,_COL28 type_applicant,_COL29 type_authorization,_COL30 type_class_of_station,_COL31 type_purpose_appl,_COL32 type_radio_srv,_COL33 type_review_alert,_COL34 type_tx_data,_COL35 zipcode,_COL36 pob_address,_COL37 name_licensee_exists,_COL38 type_metric,_COL39 date_license_print ) Interactive
+  Case 2
+    Alter Table MITable ( rename _COL1 callsign,_COL2 id_seq_num,_COL3 text_admin_notes1,_COL4 text_admin_notes2,_COL5 text_admin_notes3,_COL6 text_admin_notes4 ) Interactive
+  Case 3
+    Alter Table MITable ( rename _COL1 key_antenna,_COL2 hgt_to_tip,_COL3 key_site,_COL4 type_tx_data,_COL5 hgt_to_tip_mtr ) Interactive
+  Case 4
+    Alter Table MITable ( rename _COL1 callsign,_COL2 id_seq_num,_COL3 text_cntrl_pt1,_COL4 text_cntrl_pt2,_COL5 text_cntrl_pt3,_COL6 text_cntrl_pt4 ) Interactive
+  Case 5
+    Alter Table MITable ( rename _COL1 callsign,_COL2 id_seq_num,_COL3 text_eligibility1,_COL4 text_eligibility2,_COL5 text_eligibility3,_COL6 text_eligibility4 ) Interactive
+  Case 6
+    Alter Table MITable ( rename _COL1 key_frequency,_COL2 type_emission,_COL3 id_admin_serial_num_rcv,_COL4 id_admin_serial_num_tx,_COL5 id_ifrb_form_rcv,_COL6 id_ifrb_form_tx,_COL7 id_ifrb_rcv,_COL8 id_ifrb_tx,_COL9 id_pwr_seq ) Interactive
+  Case 7
+    Alter Table MITable ( rename _COL1 key_frequency,_COL2 angle_azimuth,_COL3 beamwidth,_COL4 callsign_marine_freq,_COL5 date_fas_meeting,_COL6 date_first_use,_COL7 flag_waiver,_COL8 freq_assigned,_COL9 freq_carrier,_COL10 freq_upper_band,_COL11 gain,_COL12 id_coser,_COL13 id_faa_ng_num,_COL14 id_fas_docket_num,_COL15 id_fccm_serial_num,_COL16 id_irac,_COL17 key_to_parent,_COL18 lineloss,_COL19 time_begin_op,_COL20 time_end_op,_COL21 type_coser_np,_COL22 type_first_use_date,_COL23 type_freq_units,_COL24 type_hgt_op_altitude,_COL25 type_irac_conditions,_COL26 type_tx_data ) Interactive
+  Case 8
+    Alter Table MITable ( rename _COL1 key_site,_COL2 type_paint_light ) Interactive
+  Case 9
+    Alter Table MITable ( rename _COL1 key_frequency,_COL2 id_pwr_seq,_COL3 power_output,_COL4 power_output_night,_COL5 type_power_output ) Interactive
+  Case 10 'rcvr
+    Alter Table MITable ( rename _COL1 key_site,_COL2 city,_COL3 id_county_code,_COL4 latitude_dmsdir,_COL5 latitude_sec,_COL6 longitude_dmsdir,_COL7 longitude_sec,_COL8 state ) Interactive
+    Create Map For MITable CoordSys Earth Projection 1, 0
+    Select * from MITable where latitude_sec and longitude_sec into PointSel noselect
+    Set Style symbol MakeSymbol (34,65280,10) 
+    Update PointSel Set obj=createpoint(-longitude_sec/3600, latitude_sec/3600)
+    Close Table PointSel
+  Case 11
+    Alter Table MITable ( rename _COL1 key_frequency,_COL2 id_receive_zone ) Interactive
+  Case 12 'site fixed
+    Alter Table MITable ( rename _COL1 key_site,_COL2 callsign,_COL3 city,_COL4 cnt_txmtrs,_COL5 faa_study,_COL6 hgt_elev,_COL7 hgt_structure,_COL8 id_county_code,_COL9 id_seq_num,_COL10 id_tower,_COL11 latitude_dmsdir,_COL12 latitude_sec,_COL13 longitude_dmsdir,_COL14 longitude_sec,_COL15 state,_COL16 text_street_stn_loc,_COL17 type_of_structure,_COL18 hgt_elev_mtr,_COL19 hgt_structure_mtr ) Interactive
+    Create Map For MITable CoordSys Earth Projection 1, 0
+    Select * from MITable where latitude_sec and longitude_sec into PointSel noselect
+    Set Style symbol MakeSymbol (34,255,10) 
+    Update PointSel Set obj=createpoint(-longitude_sec/3600, latitude_sec/3600)
+    Close Table PointSel
+  Case 13 'site mobile
+    Alter Table MITable ( rename _COL1 key_mobile_aop,_COL2 callsign,_COL3 cnt_txmtrs,_COL4 id_seq_num,_COL5 latitude_dmsdir,_COL6 latitude_sec,_COL7 longitude_dmsdir,_COL8 longitude_sec,_COL9 length_radius_op,_COL10 state,_COL11 text_area_op1,_COL12 type_area_op,_COL13 type_area_op_code,_COL14 type_tx_data,_COL15 id_county_code,_COL16 length_radius_op_mtr ) Interactive
+    Create Map For MITable CoordSys Earth Projection 1, 0
+    Select * from MITable where latitude_sec and longitude_sec into PointSel noselect
+    Set Style symbol MakeSymbol (34,16776960,10) 
+    Update PointSel Set obj=createpoint(-longitude_sec/3600, latitude_sec/3600)
+    Close Table PointSel
+  Case 14
+    Alter Table MITable ( rename _COL1 callsign,_COL2 id_seq_num,_COL3 text_spec_cond1,_COL4 text_spec_cond2,_COL5 text_spec_cond3,_COL6 text_spec_cond4 ) Interactive
+End Case
+CountArray(I%) = TableInfo(MITable, 8)
+Commit Table MITable
+Close Table MITable Interactive
+Next 'I%
+Print ""
+Print ""
+Print "Finished!"
+Print ""
+Print ""
+
+
+Print "Table:" + Space$(6) + "Count"
+TotalCount = 0
+For I% = 1 to 14
+  Print ShortNameArray(I%) + ":" + Space$(12-len(ShortNameArray(I%))) + CountArray(I%)
+  TotalCount = TotalCount + CountArray(I%)
+Next 'I%
+Print ""
+Print "Total:" + Space$(6) + TotalCount
+Close All Interactive
+Run Application ApplicationDirectory$() + "coastprg.wor"
+Run Program  "notepad " + ApplicationDirectory$() + "counts"
+Print str$(Timer() - StartTime) + " seconds have elapsed."
